@@ -1,0 +1,326 @@
+AWSTemplateFormatVersion: 2010-09-09
+Parameters:
+  RegionName:
+    Description: Region in which template will be deployed
+    Type: String
+  XCiscoMerakiAPIKey:
+    Description: Cisco Meraki API Key for storing as secret
+    Type: String
+  XCiscoMerakiAPIKeyName:
+    Description: Secret name for Cisco Meraki API Key, no spaces
+    Type: String
+  WebexAccessToken:
+    Description: Webex Access Token for Storing as Secret
+    Type: String
+  WebexAccessTokenName:
+    Description: Secret name for WebexAccessToken, no spaces
+    Type: String
+  MerakiBaseUrl:
+    Description: 'Base URL for Meraki API, usually https://api.meraki.com/api/v1'
+    Type: String
+  MsTeamsUrl:
+    Description: Base URL for Webhook in Microsoft Teams (Optional)
+    Type: String
+  WtRoomName:
+    Description: 'User''s name in Webex, the name by which others would contact the user'
+    Type: String
+  LambdaFunctionName:
+    Description: 'Name for Lambda Function, no spaces'
+    Type: String
+  DynamoDBTableName:
+    Description: 'Name for DynamoDB tabñe, no spaces'
+    Type: String
+Resources:
+  MvMtLambdaRole:
+    Type: 'AWS::IAM::Role'
+    Properties:
+      AssumeRolePolicyDocument:
+        Version: 2012-10-17
+        Statement:
+          - Effect: Allow
+            Principal:
+              Service: lambda.amazonaws.com
+            Action:
+              - 'sts:AssumeRole'
+      Path: /
+  AllowGetCiscoMerakiAPIKey:
+    Type: 'AWS::IAM::Policy'
+    Properties:
+      PolicyName: AllowGetCiscoMerakiAPIKey
+      PolicyDocument:
+        Version: 2012-10-17
+        Statement:
+          - Effect: Allow
+            Action: 'secretsmanager:GetSecretValue'
+            Resource: !Ref SecretMerakiApiKey
+      Roles:
+        - Ref: MvMtLambdaRole
+  AllowGetDynamoDBItem:
+    Type: 'AWS::IAM::Policy'
+    Properties:
+      PolicyName: AllowGetDynamoDBItem
+      PolicyDocument:
+        Version: 2012-10-17
+        Statement:
+          - Effect: Allow
+            Action: 'dynamodb:GetItem'
+            Resource:
+              Fn::GetAtt:
+                - TableMvMtEventIds
+                - Arn
+      Roles:
+        - Ref: MvMtLambdaRole
+  AllowGetWebexAccessToken:
+    Type: 'AWS::IAM::Policy'
+    Properties:
+      PolicyName: AllowGetWebexAccessToken
+      PolicyDocument:
+        Version: 2012-10-17
+        Statement:
+          - Effect: Allow
+            Action: 'secretsmanager:GetSecretValue'
+            Resource: !Ref SecretWebexAccessToken
+      Roles:
+        - Ref: MvMtLambdaRole
+  AllowPutDynamoDBItem:
+    Type: 'AWS::IAM::Policy'
+    Properties:
+      PolicyName: AllowPutDynamoDBItem
+      PolicyDocument:
+        Version: 2012-10-17
+        Statement:
+          - Effect: Allow
+            Action: 'dynamodb:PutItem'
+            Resource:
+              Fn::GetAtt:
+                - TableMvMtEventIds
+                - Arn
+      Roles:
+        - Ref: MvMtLambdaRole
+  AllowUpdateDynamoDBItem:
+    Type: 'AWS::IAM::Policy'
+    Properties:
+      PolicyName: AllowUpdateDynamoDBItem
+      PolicyDocument:
+        Version: 2012-10-17
+        Statement:
+          - Effect: Allow
+            Action: 'dynamodb:UpdateItem'
+            Resource:
+              Fn::GetAtt:
+                - TableMvMtEventIds
+                - Arn
+      Roles:
+        - Ref: MvMtLambdaRole
+  TableMvMtEventIds:
+    Type: 'AWS::DynamoDB::Table'
+    Properties:
+      TableName: mv-mt-event-ids
+      AttributeDefinitions:
+        - AttributeName: alertId
+          AttributeType: S
+      KeySchema:
+        - AttributeName: alertId
+          KeyType: HASH
+      ProvisionedThroughput:
+        ReadCapacityUnits: '5'
+        WriteCapacityUnits: '5'
+    Metadata:
+      'AWS::CloudFormation::Designer':
+        id: 051d0ae3-cc24-4756-a669-9e381830018c
+  LambdaMvMtIntegration:
+    Type: 'AWS::Lambda::Function'
+    Properties:
+      Description: MV MT Integration
+      FunctionName: mv-mt-integration
+      Handler: lambda_function.lambda_handler
+      Role:
+        'Fn::GetAtt':
+          - MvMtLambdaRole
+          - Arn
+      Code:
+        S3Bucket: mv-mt-deployment-package-us-east-1
+        S3Key: mv-mt-integration-41daed51-e8da-4858-af49-e6370a6c7d93.zip
+      Runtime: python3.7
+      Timeout: '180'
+      MemorySize: '256'
+      Environment:
+        Variables:
+          DYNAMODB_TABLE: !Select
+            - 1
+            - !Split
+              - /
+              - !GetAtt TableMvMtEventIds.Arn
+          REGION_NAME: !Ref RegionName
+          MERAKI_BASEURL: !Ref MerakiBaseUrl
+          MS_TEAMS_URL: !Ref MsTeamsUrl
+          WT_ROOM_NAME: !Ref WtRoomName
+    Metadata:
+      'AWS::CloudFormation::Designer':
+        id: f0b5afb7-ab61-47a3-889a-93f784703cff
+  ApiGateway:
+    Type: 'AWS::ApiGateway::RestApi'
+    Properties:
+      Description: API Gateway for Lambda Function
+      EndpointConfiguration:
+        Types:
+          - REGIONAL
+      Name: mt-mv-integration
+    Metadata:
+      'AWS::CloudFormation::Designer':
+        id: 877d0332-c92f-4fce-add3-dc04e49d315e
+  ApiGatewayRootMethod:
+    Type: 'AWS::ApiGateway::Method'
+    Properties:
+      AuthorizationType: NONE
+      HttpMethod: POST
+      Integration:
+        IntegrationHttpMethod: POST
+        Type: AWS
+        Uri: !Sub
+          - >-
+            arn:aws:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${lambdaArn}/invocations
+          - lambdaArn: !GetAtt LambdaMvMtIntegration.Arn
+      ResourceId: !GetAtt ApiGateway.RootResourceId
+      RestApiId: !Ref ApiGateway
+    Metadata:
+      'AWS::CloudFormation::Designer':
+        id: 9146c790-f5f0-4a4c-9868-bceb4f44fbd8
+  ApiGatewayDeployment:
+    Type: 'AWS::ApiGateway::Deployment'
+    DependsOn:
+      - ApiGatewayRootMethod
+    Properties:
+      RestApiId: !Ref ApiGateway
+      StageName: prod
+    Metadata:
+      'AWS::CloudFormation::Designer':
+        id: 90677e87-3ad7-47ed-bf2a-fbf433215d51
+  LambdaApiGatewayInvoke:
+    Type: 'AWS::Lambda::Permission'
+    Properties:
+      Action: 'lambda:InvokeFunction'
+      FunctionName: !GetAtt LambdaMvMtIntegration.Arn
+      Principal: apigateway.amazonaws.com
+      SourceArn: !Sub >-
+        arn:aws:execute-api:${AWS::Region}:${AWS::AccountId}:${ApiGateway}/prod/POST/
+    Metadata:
+      'AWS::CloudFormation::Designer':
+        id: f77427bc-68f5-40f3-a42b-5683ec476ebe
+  SecretMerakiApiKey:
+    Type: 'AWS::SecretsManager::Secret'
+    Properties:
+      Description: Cisco Meraki API Key
+      Name: X-Cisco-Meraki-API-Key
+      SecretString: !Sub
+        - '{"X-Cisco-Meraki-API-Key": ${Secret}}'
+        - { Secret: !Ref XCiscoMerakiAPIKey}
+    Metadata:
+      'AWS::CloudFormation::Designer':
+        id: e7fdce93-9f1b-4693-a67f-b49454f05715
+  SecretWebexAccessToken:
+    Type: 'AWS::SecretsManager::Secret'
+    Properties:
+      Description: Webex API Access Token
+      Name: Webex-Access-Token
+      SecretString: !Sub
+        - '{"Webex-Access-Token": ${Secret}}'
+        - { Secret: !Ref WebexAccessToken}
+    Metadata:
+      'AWS::CloudFormation::Designer':
+        id: 2e4960dd-943f-4147-acd6-1f6cc2530736
+Metadata:
+  'AWS::CloudFormation::Designer':
+    2e4960dd-943f-4147-acd6-1f6cc2530736:
+      size:
+        width: 60
+        height: 60
+      position:
+        x: 1000
+        'y': 450
+      z: 1
+      embeds: []
+    e7fdce93-9f1b-4693-a67f-b49454f05715:
+      size:
+        width: 60
+        height: 60
+      position:
+        x: 840
+        'y': 600
+      z: 1
+      embeds: []
+    877d0332-c92f-4fce-add3-dc04e49d315e:
+      size:
+        width: 330
+        height: 240
+      position:
+        x: 60
+        'y': 90
+      z: 1
+      embeds:
+        - 90677e87-3ad7-47ed-bf2a-fbf433215d51
+    051d0ae3-cc24-4756-a669-9e381830018c:
+      size:
+        width: 60
+        height: 60
+      position:
+        x: 510
+        'y': 410
+      z: 1
+      embeds: []
+    1242b408-e367-4536-bedf-60e970b11931:
+      size:
+        width: 60
+        height: 60
+      position:
+        x: 750
+        'y': 480
+      z: 1
+      embeds: []
+    f0b5afb7-ab61-47a3-889a-93f784703cff:
+      size:
+        width: 60
+        height: 60
+      position:
+        x: 750
+        'y': 280
+      z: 1
+      embeds: []
+    f77427bc-68f5-40f3-a42b-5683ec476ebe:
+      size:
+        width: 60
+        height: 60
+      position:
+        x: 940
+        'y': 360
+      z: 1
+      embeds: []
+      isassociatedwith:
+        - f0b5afb7-ab61-47a3-889a-93f784703cff
+    9146c790-f5f0-4a4c-9868-bceb4f44fbd8:
+      size:
+        width: 60
+        height: 60
+      position:
+        x: 660
+        'y': 170
+      z: 0
+      embeds: []
+      iscontainedinside:
+        - 877d0332-c92f-4fce-add3-dc04e49d315e
+        - 877d0332-c92f-4fce-add3-dc04e49d315e
+    90677e87-3ad7-47ed-bf2a-fbf433215d51:
+      size:
+        width: 60
+        height: 60
+      position:
+        x: 210
+        'y': 150
+      z: 2
+      parent: 877d0332-c92f-4fce-add3-dc04e49d315e
+      embeds: []
+      iscontainedinside:
+        - 877d0332-c92f-4fce-add3-dc04e49d315e
+        - 877d0332-c92f-4fce-add3-dc04e49d315e
+      dependson:
+        - 9146c790-f5f0-4a4c-9868-bceb4f44fbd8
