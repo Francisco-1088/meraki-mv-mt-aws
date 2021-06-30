@@ -685,7 +685,7 @@ If you haven’t, generate an API Key under My Profile, and ask a Meraki SE or N
 <p id="gdcalert47" ><span style="color: red; font-weight: bold">>>>>>  gd2md-html alert: inline image link here (to images/image47.png). Store image on your image server and adjust path/filename/extension if necessary. </span><br>(<a href="#">Back to top</a>)(<a href="#gdcalert48">Next alert</a>)<br><span style="color: red; font-weight: bold">>>>>> </span></p>
 
 
-![alt_text](images/image47.png "image_tooltip")
+![alt_text](images/image35.png "image_tooltip")
 
 
 
@@ -696,7 +696,7 @@ If you haven’t, generate an API Key under My Profile, and ask a Meraki SE or N
 <p id="gdcalert48" ><span style="color: red; font-weight: bold">>>>>>  gd2md-html alert: inline image link here (to images/image48.png). Store image on your image server and adjust path/filename/extension if necessary. </span><br>(<a href="#">Back to top</a>)(<a href="#gdcalert49">Next alert</a>)<br><span style="color: red; font-weight: bold">>>>>> </span></p>
 
 
-![alt_text](images/image48.png "image_tooltip")
+![alt_text](images/image47.png "image_tooltip")
 
 
 NOTE: For this section to work, ask your Meraki SE to enable MT APIs in your network.
@@ -710,7 +710,7 @@ Make sure you have tagged your cameras and sensors as described in the previous 
 <p id="gdcalert49" ><span style="color: red; font-weight: bold">>>>>>  gd2md-html alert: inline image link here (to images/image49.png). Store image on your image server and adjust path/filename/extension if necessary. </span><br>(<a href="#">Back to top</a>)(<a href="#gdcalert50">Next alert</a>)<br><span style="color: red; font-weight: bold">>>>>> </span></p>
 
 
-![alt_text](images/image49.png "image_tooltip")
+![alt_text](images/image48.png "image_tooltip")
 
 
 
@@ -718,7 +718,7 @@ Make sure you have tagged your cameras and sensors as described in the previous 
 <p id="gdcalert50" ><span style="color: red; font-weight: bold">>>>>>  gd2md-html alert: inline image link here (to images/image50.png). Store image on your image server and adjust path/filename/extension if necessary. </span><br>(<a href="#">Back to top</a>)(<a href="#gdcalert51">Next alert</a>)<br><span style="color: red; font-weight: bold">>>>>> </span></p>
 
 
-![alt_text](images/image50.png "image_tooltip")
+![alt_text](images/image49.png "image_tooltip")
 
 
 After this, go into your Network alerts, and add your Webhooks receiver as a custom recipient for Camera motion alerts.
@@ -728,7 +728,7 @@ After this, go into your Network alerts, and add your Webhooks receiver as a cus
 <p id="gdcalert51" ><span style="color: red; font-weight: bold">>>>>>  gd2md-html alert: inline image link here (to images/image51.png). Store image on your image server and adjust path/filename/extension if necessary. </span><br>(<a href="#">Back to top</a>)(<a href="#gdcalert52">Next alert</a>)<br><span style="color: red; font-weight: bold">>>>>> </span></p>
 
 
-![alt_text](images/image51.png "image_tooltip")
+![alt_text](images/image50.png "image_tooltip")
 
 
 The event workflow is as follows:
@@ -761,7 +761,7 @@ The event workflow is as follows:
 <p id="gdcalert52" ><span style="color: red; font-weight: bold">>>>>>  gd2md-html alert: inline image link here (to images/image52.png). Store image on your image server and adjust path/filename/extension if necessary. </span><br>(<a href="#">Back to top</a>)(<a href="#gdcalert53">Next alert</a>)<br><span style="color: red; font-weight: bold">>>>>> </span></p>
 
 
-![alt_text](images/image52.png "image_tooltip")
+![alt_text](images/image51.png "image_tooltip")
 
 
 The notification will contain:
@@ -800,7 +800,7 @@ Click on the Items menu, and add filters with the attribute names of alertId, al
 <p id="gdcalert53" ><span style="color: red; font-weight: bold">>>>>>  gd2md-html alert: inline image link here (to images/image53.png). Store image on your image server and adjust path/filename/extension if necessary. </span><br>(<a href="#">Back to top</a>)(<a href="#gdcalert54">Next alert</a>)<br><span style="color: red; font-weight: bold">>>>>> </span></p>
 
 
-![alt_text](images/image53.png "image_tooltip")
+![alt_text](images/image52.png "image_tooltip")
 
 
 For troubleshooting your function, you can go to Lambda, choose your function, click Monitor and then in the Logs section you’ll see all of your function invocations. If you click on any of the LogStreams, you can look at the execution of the function
@@ -810,7 +810,7 @@ For troubleshooting your function, you can go to Lambda, choose your function, c
 <p id="gdcalert54" ><span style="color: red; font-weight: bold">>>>>>  gd2md-html alert: inline image link here (to images/image54.png). Store image on your image server and adjust path/filename/extension if necessary. </span><br>(<a href="#">Back to top</a>)(<a href="#gdcalert55">Next alert</a>)<br><span style="color: red; font-weight: bold">>>>>> </span></p>
 
 
-![alt_text](images/image54.png "image_tooltip")
+![alt_text](images/image53.png "image_tooltip")
 
 
 
@@ -818,7 +818,7 @@ For troubleshooting your function, you can go to Lambda, choose your function, c
 <p id="gdcalert55" ><span style="color: red; font-weight: bold">>>>>>  gd2md-html alert: inline image link here (to images/image55.png). Store image on your image server and adjust path/filename/extension if necessary. </span><br>(<a href="#">Back to top</a>)(<a href="#gdcalert56">Next alert</a>)<br><span style="color: red; font-weight: bold">>>>>> </span></p>
 
 
-![alt_text](images/image55.png "image_tooltip")
+![alt_text](images/image54.png "image_tooltip")
 
 
 It’s also useful if you record successful invocation events by clicking on the event and copying all of it
@@ -828,7 +828,7 @@ It’s also useful if you record successful invocation events by clicking on the
 <p id="gdcalert56" ><span style="color: red; font-weight: bold">>>>>>  gd2md-html alert: inline image link here (to images/image56.png). Store image on your image server and adjust path/filename/extension if necessary. </span><br>(<a href="#">Back to top</a>)(<a href="#gdcalert57">Next alert</a>)<br><span style="color: red; font-weight: bold">>>>>> </span></p>
 
 
-![alt_text](images/image56.png "image_tooltip")
+![alt_text](images/image55.png "image_tooltip")
 
 
 You can then go back to your Function code, click on the down arrow next to Test and configure new Test events:
@@ -838,7 +838,7 @@ You can then go back to your Function code, click on the down arrow next to Test
 <p id="gdcalert57" ><span style="color: red; font-weight: bold">>>>>>  gd2md-html alert: inline image link here (to images/image57.png). Store image on your image server and adjust path/filename/extension if necessary. </span><br>(<a href="#">Back to top</a>)(<a href="#gdcalert58">Next alert</a>)<br><span style="color: red; font-weight: bold">>>>>> </span></p>
 
 
-![alt_text](images/image57.png "image_tooltip")
+![alt_text](images/image56.png "image_tooltip")
 
 
 Paste your event into the box, and make sure to find and replace all instances of single quotes with double quotes to make it a valid JSON object.
@@ -848,7 +848,7 @@ Paste your event into the box, and make sure to find and replace all instances o
 <p id="gdcalert58" ><span style="color: red; font-weight: bold">>>>>>  gd2md-html alert: inline image link here (to images/image58.png). Store image on your image server and adjust path/filename/extension if necessary. </span><br>(<a href="#">Back to top</a>)(<a href="#gdcalert59">Next alert</a>)<br><span style="color: red; font-weight: bold">>>>>> </span></p>
 
 
-![alt_text](images/image58.png "image_tooltip")
+![alt_text](images/image57.png "image_tooltip")
 
 
 Also, make sure to convert any **True** values to **“True”**, again to convert it to a valid JSON document. Once it checks out, save it and you can use these test events in the future for any changes you implement in your code. Just make sure to vary the alertId by changing one or two numbers, otherwise you will get the duplicate alert message.
@@ -858,5 +858,5 @@ Also, make sure to convert any **True** values to **“True”**, again to conve
 <p id="gdcalert59" ><span style="color: red; font-weight: bold">>>>>>  gd2md-html alert: inline image link here (to images/image59.png). Store image on your image server and adjust path/filename/extension if necessary. </span><br>(<a href="#">Back to top</a>)(<a href="#gdcalert60">Next alert</a>)<br><span style="color: red; font-weight: bold">>>>>> </span></p>
 
 
-![alt_text](images/image59.png "image_tooltip")
+![alt_text](images/image58.png "image_tooltip")
 
