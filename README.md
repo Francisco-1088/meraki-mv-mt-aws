@@ -25,16 +25,15 @@ Conversion notes:
 
 ## Table of Contents
 
-[Introduction](https://github.com/Francisco-1088/mt-webexteams/blob/master/README.md#intro)
+[Introduction](https://github.com/Francisco-1088/meraki-mv-mt-aws/blob/main/README.md#introduction)
 
-[Webex, MS Teams and Slack MT Alerts with Camera Snapshots and a Flask Server](https://github.com/Francisco-1088/mt-webexteams/blob/master/README.md#flasksnapshots)
+[MT Alerts with Camera Snapshots and AWS](https://github.com/Francisco-1088/meraki-mv-mt-aws/blob/main/README.md#mt-alerts-with-camera-snapshots-and-aws)
 
-[Webex, MS Teams and Slack Alerts with Composite Camera images](https://github.com/Francisco-1088/mt-webexteams/blob/master/README.md#motionrecap)
+[Webex and MS Teams Alerts with Motion Recap Images](https://github.com/Francisco-1088/meraki-mv-mt-aws/blob/main/README.md#webex-ms-teams-and-slack-alerts-with-motion-recap-images)
 
-[Appendix: Adaptive Cards for Webex and MS Teams and Message Blocks for Slack](https://github.com/Francisco-1088/mt-webexteams/blob/master/README.md#appendix)
+[Appendix: Adaptive Cards for Webex and MS Teams](https://github.com/Francisco-1088/meraki-mv-mt-aws/blob/main/README.md#appendix-adaptive-cards-for-webex-and-ms-teams)
 
-
-## Appendix: Reporting with DynamoDB and Cloudwatch
+[Appendix: Reporting with DynamoDB and Cloudwatch](https://github.com/Francisco-1088/meraki-mv-mt-aws/blob/main/README.md#appendix-reporting-with-dynamodb-and-cloudwatch-1)
 
 
 ## Introduction
