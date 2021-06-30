@@ -57,6 +57,8 @@ Components:
 *   AWS Secrets Manager: Handle API Keys and tokens securely for interacting with the Meraki Dashboard and Cisco Webex.
 *   Amazon CloudWatch: Log all events and errors in the system.
 
+![alt_text](images/image60.png "image_tooltip")
+
 
 ## MT Alerts with Camera Snapshots and AWS
 
