@@ -407,7 +407,7 @@ If you haven’t, generate an API Key under My Profile, and ask a Meraki SE or N
 
 
 
-## Webex, MS Teams and Slack Alerts with Motion Recap images
+## Webex and MS Teams Alerts with Motion Recap images
 
 ![alt_text](images/image47.png "image_tooltip")
 
